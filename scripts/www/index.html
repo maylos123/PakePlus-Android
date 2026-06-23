@@ -19447,4 +19447,50 @@ function getAccountsGlobal() {
             margin-top: -150px;
             margin-right: -150px
         }
-        </style></div></body></html>
+
+        /* === PakePlus 应用内退出按钮样式 === */
+        .pp-exit-btn {
+            position: fixed;
+            bottom: 28px; right: 20px;
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            background: rgba(220, 38, 38, 0.82);
+            color: #fff;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 99999;
+            display: flex;
+            align-items: center; justify-content: center;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.32);
+            transition: all .18s;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            line-height: 1;
+        }
+        .pp-exit-btn:hover  { background: rgba(185, 28, 28, 0.92); transform: scale(1.06); }
+        .pp-exit-btn:active { transform: scale(0.93); }
+        @media (min-width: 768px) {
+            .pp-exit-btn { width: 58px; height: 58px; font-size: 26px; bottom: 36px; right: 28px; }
+        }
+        </style>
+<!-- PakePlus 退出按钮（仅在 App 内显示） -->
+<button class="pp-exit-btn" id="ppExitBtn" title="退出应用" style="display:none;">✕</button>
+<script>
+(function(){
+  var isInPakePlus = !!(window.JsBridge && typeof window.JsBridge.isApp === 'function' && window.JsBridge.isApp());
+  if (isInPakePlus) {
+    var btn = document.getElementById('ppExitBtn');
+    if (btn) {
+      btn.style.display = 'flex';
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        if (window.history.length > 1) {
+          window.history.go(-(window.history.length - 1));
+        }
+        try { window.close(); } catch(_) {}
+      });
+    }
+  }
+})();
+</script></div></body></html>
